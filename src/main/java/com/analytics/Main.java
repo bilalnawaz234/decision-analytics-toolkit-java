@@ -1,9 +1,9 @@
 package com.analytics;
 
 import com.analytics.model.Product;
+import com.analytics.service.ProfitAnalysisService;
 import com.analytics.util.CsvReader;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,11 +32,12 @@ public class Main {
                 }
                 case 3 -> {
                     ensureLoaded(products);
-                    printProfitReport(products);
+                    ProfitAnalysisService.printProductProfits(products);
+                    printTotals(products);
                 }
                 case 4 -> {
                     ensureLoaded(products);
-                    printBreakEvenReport(products);
+                    System.out.println("Break-even analysis not implemented.\n");
                 }
                 case 5 -> {
                     ensureLoaded(products);
@@ -57,44 +58,32 @@ public class Main {
         for (int i = 0; i < Math.min(products.size(), 10); i++) {
             Product p = products.get(i);
             System.out.printf(
-                    "%d) %s | Revenue: $%.2f | Cost: $%.2f | Profit: $%.2f%n",
-                    i + 1, p.getName(), p.getRevenue(), p.getTotalCost(), p.getProfit()
+                    "%d) %s | Revenue: %.2f | Cost: %.2f | Profit: %.2f%n",
+                    i + 1,
+                    p.getName(),
+                    p.getRevenue(),
+                    p.getTotalCost(),
+                    p.getProfit()
             );
         }
         System.out.println();
     }
 
-    private static void printProfitReport(List<Product> products) {
-        System.out.println("\n--- Profitability Report ---");
-        System.out.printf("%-25s %12s %12s %12s %10s%n",
-                "Product", "Revenue", "Cost", "Profit", "Margin");
+    private static void printTotals(List<Product> products) {
+        double totalRevenue = ProfitAnalysisService.calculateTotalRevenue(products);
+        double totalProfit = ProfitAnalysisService.calculateTotalProfit(products);
 
-        products.stream()
-                .sorted(Comparator.comparingDouble(Product::getProfit).reversed())
-                .forEach(p -> {
-                    double revenue = p.getRevenue();
-                    double profit = p.getProfit();
-                    double margin = revenue == 0 ? 0 : (profit / revenue) * 100;
-
-                    System.out.printf(
-                            "%-25s $%11.2f $%11.2f $%11.2f %9.2f%%%n",
-                            p.getName(), revenue, p.getTotalCost(), profit, margin
-                    );
-                });
-
-        System.out.println();
-    }
-
-    private static void printBreakEvenReport(List<Product> products) {
-        System.out.println("\n--- Break-even Report ---");
-        System.out.println("Break-even analysis requires unit-level cost access.\n");
+        System.out.printf(
+                "%nTOTAL REVENUE: %.2f%nTOTAL PROFIT: %.2f%n%n",
+                totalRevenue,
+                totalProfit
+        );
     }
 
     private static void printScenarioPriceChange(List<Product> products, double pctChange) {
-        System.out.println("\n--- Scenario Analysis (" + pctChange + "% price change) ---");
-
         double factor = 1 + pctChange / 100.0;
 
+        System.out.println("\nScenario Analysis (" + pctChange + "% price change)");
         System.out.printf("%-25s %12s %12s %12s%n",
                 "Product", "Old Profit", "New Profit", "Delta");
 
@@ -104,8 +93,11 @@ public class Main {
             double delta = newProfit - oldProfit;
 
             System.out.printf(
-                    "%-25s $%11.2f $%11.2f $%11.2f%n",
-                    p.getName(), oldProfit, newProfit, delta
+                    "%-25s %12.2f %12.2f %12.2f%n",
+                    p.getName(),
+                    oldProfit,
+                    newProfit,
+                    delta
             );
         }
         System.out.println();
@@ -119,7 +111,7 @@ public class Main {
 
         System.out.println("1) Load CSV data");
         System.out.println("2) View product summary");
-        System.out.println("3) Profitability report");
+        System.out.println("3) Profit analysis");
         System.out.println("4) Break-even analysis");
         System.out.println("5) Scenario analysis");
         System.out.println("0) Exit\n");
