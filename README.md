@@ -19,6 +19,5 @@ A Java-based decision support system designed to help small businesses analyze p
 - CSV data processing
 - (Optional) SQLite for persistence
 
-## Status
-Project setup in progress.
+
 
