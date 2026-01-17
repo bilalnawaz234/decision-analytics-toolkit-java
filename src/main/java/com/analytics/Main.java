@@ -3,6 +3,7 @@ package com.analytics;
 import com.analytics.model.Product;
 import com.analytics.service.BreakEvenService;
 import com.analytics.service.ProfitAnalysisService;
+import com.analytics.service.ScenarioSimulator;
 import com.analytics.util.CsvReader;
 
 import java.util.Comparator;
@@ -44,7 +45,7 @@ public class Main {
                 case 5 -> {
                     ensureLoaded(products);
                     double pct = readDouble(scanner, "Enter price change %: ");
-                    printScenarioPriceChange(products, pct);
+                    ScenarioSimulator.printScenarioReport(products, pct);
                 }
                 case 0 -> {
                     System.out.println("Exiting application.");
@@ -99,33 +100,6 @@ public class Main {
                     }
                 });
 
-        System.out.println();
-    }
-
-    private static void printScenarioPriceChange(List<Product> products, double pctChange) {
-        double factor = 1 + pctChange / 100.0;
-
-        System.out.println("\nScenario Analysis (" + pctChange + "% price change)");
-        System.out.printf("%-25s %12s %12s %12s%n",
-                "Product", "Old Profit", "New Profit", "Delta");
-
-        for (Product p : products) {
-            double oldProfit = p.getProfit();
-
-            double newRevenue = (p.getPrice() * factor) * p.getUnitsSold();
-            double newTotalCost = (p.getVariableCost() * p.getUnitsSold()) + p.getFixedCost();
-            double newProfit = newRevenue - newTotalCost;
-
-            double delta = newProfit - oldProfit;
-
-            System.out.printf(
-                    "%-25s %12.2f %12.2f %12.2f%n",
-                    p.getName(),
-                    oldProfit,
-                    newProfit,
-                    delta
-            );
-        }
         System.out.println();
     }
 
