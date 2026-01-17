@@ -20,6 +20,22 @@ public class Product {
         return name;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public int getUnitsSold() {
+        return unitsSold;
+    }
+
+    public double getVariableCost() {
+        return variableCost;
+    }
+
+    public double getFixedCost() {
+        return fixedCost;
+    }
+
     public double getRevenue() {
         return price * unitsSold;
     }
