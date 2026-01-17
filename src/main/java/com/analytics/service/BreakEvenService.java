@@ -5,17 +5,24 @@ import com.analytics.model.Product;
 public class BreakEvenService {
 
     public static int calculateBreakEvenUnits(Product product) {
-        if (product.getRevenue() <= 0 || product.getProfit() == 0) {
+        double contributionMarginPerUnit = product.getPrice() - product.getVariableCost();
+
+        if (contributionMarginPerUnit <= 0) {
+            return -1;
+        }
+
+        if (product.getFixedCost() <= 0) {
             return 0;
         }
 
-        double contributionMargin = product.getRevenue() / product.getUnitsSold()
-                - product.getTotalCost() / product.getUnitsSold();
+        return (int) Math.ceil(product.getFixedCost() / contributionMarginPerUnit);
+    }
 
-        if (contributionMargin <= 0) {
-            return -1; // Break-even not achievable
+    public static double calculateBreakEvenRevenue(Product product) {
+        int units = calculateBreakEvenUnits(product);
+        if (units <= 0) {
+            return units;
         }
-
-        return (int) Math.ceil(product.getTotalCost() / contributionMargin);
+        return units * product.getPrice();
     }
 }
