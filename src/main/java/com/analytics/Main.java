@@ -1,9 +1,11 @@
 package com.analytics;
 
 import com.analytics.model.Product;
+import com.analytics.service.BreakEvenService;
 import com.analytics.service.ProfitAnalysisService;
 import com.analytics.util.CsvReader;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,7 +39,7 @@ public class Main {
                 }
                 case 4 -> {
                     ensureLoaded(products);
-                    System.out.println("Break-even analysis not implemented.\n");
+                    printBreakEvenReport(products);
                 }
                 case 5 -> {
                     ensureLoaded(products);
@@ -80,6 +82,26 @@ public class Main {
         );
     }
 
+    private static void printBreakEvenReport(List<Product> products) {
+        System.out.println("\n--- Break-even Analysis ---");
+        System.out.printf("%-25s %15s %18s%n", "Product", "BE Units", "BE Revenue");
+
+        products.stream()
+                .sorted(Comparator.comparing(Product::getName))
+                .forEach(p -> {
+                    int beUnits = BreakEvenService.calculateBreakEvenUnits(p);
+
+                    if (beUnits == -1) {
+                        System.out.printf("%-25s %15s %18s%n", p.getName(), "N/A", "N/A");
+                    } else {
+                        double beRevenue = BreakEvenService.calculateBreakEvenRevenue(p);
+                        System.out.printf("%-25s %15d %18.2f%n", p.getName(), beUnits, beRevenue);
+                    }
+                });
+
+        System.out.println();
+    }
+
     private static void printScenarioPriceChange(List<Product> products, double pctChange) {
         double factor = 1 + pctChange / 100.0;
 
@@ -89,7 +111,11 @@ public class Main {
 
         for (Product p : products) {
             double oldProfit = p.getProfit();
-            double newProfit = (p.getRevenue() * factor) - p.getTotalCost();
+
+            double newRevenue = (p.getPrice() * factor) * p.getUnitsSold();
+            double newTotalCost = (p.getVariableCost() * p.getUnitsSold()) + p.getFixedCost();
+            double newProfit = newRevenue - newTotalCost;
+
             double delta = newProfit - oldProfit;
 
             System.out.printf(
