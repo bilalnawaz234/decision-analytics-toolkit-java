@@ -19,62 +19,116 @@ This toolkit provides a structured way to evaluate those questions using financi
 
 ## Features
 
-- CSV-based data ingestion
-- Product-level revenue, cost, and profit analysis
-- Total revenue and total profit calculation
-- Break-even analysis per product
-- Scenario simulation for price changes
-- Modular, service-based Java design
+- CSV-based data ingestion  
+- Product-level revenue, cost, and profit analysis  
+- Total revenue and total profit calculation  
+- Break-even analysis per product  
+- Scenario simulation for price changes  
+- Modular, service-based Java design  
 
 ---
+## Project Structure
 
-
+- decision-analytics-toolkit-java  
+  - data  
+    - sample_sales_data.csv  
+  - src  
+    - main  
+      - java  
+        - com  
+          - analytics  
+            - Main.java  
+            - model  
+            - service  
+            - util  
 ---
 
 ## How to Download
 
 ### Option 1: Download as ZIP
-1. Go to the GitHub repository
-2. Click the green **Code** button
-3. Select **Download ZIP**
-4. Extract the folder to your computer
-5. Run on coding platform
-   
+
+1. Go to the GitHub repository  
+2. Click the green **Code** button  
+3. Select **Download ZIP**  
+4. Extract the folder to your computer  
+5. Open the project in your preferred coding platform  
 
 ### Option 2: Clone with Git
-```bash
+
 git clone https://github.com/your-username/decision-analytics-toolkit-java.git
 
-## Testing with Sample Data
+## How to Run
+### Open the project in IntelliJ IDEA
 
-This project includes a sample dataset to verify functionality and validate business logic.
+Open src/main/java/com/analytics/Main.java
 
-### Steps to Test
+Click the green ▶ icon next to main
 
-1. Run the application (`Main.java`) in IntelliJ.
-2. Select option `1` to load the sample CSV data.
-3. Use the following menu options to validate results:
-   - `2` – View product revenue, cost, and profit summary
-   - `3` – Run profit analysis and view total revenue and profit
-   - `4` – View break-even units and break-even revenue
-   - `5` – Run scenario analysis (e.g., enter `5` for a +5% price change)
+Use the console menu to interact with the program
 
-### Expected Behavior
+Testing with Sample Data
+This project includes a sample dataset that allows users to test functionality and verify business logic without modifying the source code.
 
-- Products with higher margins show higher profitability.
-- Products with higher fixed costs require more units to break even.
-- Increasing prices in scenario analysis increases profit for products with positive unit sales.
-- A `0%` price change results in no profit difference.
+The sample data file is located at:
 
-### Sample Validation
+bash
+Copy code
+data/sample_sales_data.csv
+How to Test
+Run the application (Main.java)
 
-Using the included `sample_sales_data.csv`, users can manually verify:
-- Revenue = `price × unitsSold`
-- Total cost = `(variableCost × unitsSold) + fixedCost`
-- Profit = `revenue − total cost`
-- Break-even units = `fixedCost ÷ (price − variableCost)`
+Select option 1 to load the sample CSV data
 
-This allows users to confirm the accuracy of calculations without modifying the source code.
+Use the following menu options to test functionality:
 
+2 – View product revenue, cost, and profit summary
 
+3 – Run profit analysis and view total revenue and total profit
 
+4 – View break-even units and break-even revenue
+
+5 – Run scenario analysis (e.g., enter 5 for a +5% price change)
+
+Expected Results
+Products with higher margins show higher profitability
+
+Products with higher fixed costs require more units to break even
+
+Increasing prices in scenario analysis increases profit for products with positive unit sales
+
+A 0% price change results in no difference in profit
+
+Sample Data Validation
+Using the values in sample_sales_data.csv, results can be manually verified as follows:
+
+Revenue = price × unitsSold
+
+Total cost = (variableCost × unitsSold) + fixedCost
+
+Profit = revenue − total cost
+
+Break-even units = fixedCost ÷ (price − variableCost)
+
+This allows users to confirm calculation accuracy and understand how input data affects outcomes.
+
+Technologies Used
+Java
+
+IntelliJ IDEA
+
+CSV file processing
+
+Object-oriented design
+
+Financial and decision analytics
+
+Future Enhancements
+Export analysis results to CSV
+
+Additional scenario parameters
+
+Database integration
+
+Data visualization support
+
+```bash
