@@ -1,23 +1,49 @@
 # Decision Analytics Toolkit (Java)
 
-A Java-based decision support system designed to help small businesses analyze profitability, break-even points, and pricing scenarios using structured sales data.
+A Java-based decision-support tool designed to help small businesses analyze profitability, understand cost structures, and evaluate pricing scenarios using real sales data.
 
-## Project Goals
-- Translate business data into actionable insights
-- Apply object-oriented design to real-world business problems
-- Support data-driven decision-making for small businesses
+Instead of building a traditional CRUD application, this project focuses on **business analytics and decision-making logic**, translating raw data into actionable insights.
 
-## Core Features
-- Profit and margin analysis per product
-- Break-even point calculation
-- Scenario simulation for pricing and cost changes
-- CSV-based data input
+---
 
-## Tech Stack
-- Java
-- Maven
-- CSV data processing
-- (Optional) SQLite for persistence
+## Business Problem
+
+Small businesses often collect sales data but lack the tools to answer key questions such as:
+- Which products are truly profitable?
+- How many units must be sold to break even?
+- How would pricing changes impact overall profit?
+
+This toolkit provides a structured way to evaluate those questions using financial metrics and scenario analysis.
+
+---
+
+## Features
+
+- CSV-based data ingestion
+- Product-level revenue, cost, and profit analysis
+- Total revenue and total profit calculation
+- Break-even analysis per product
+- Scenario simulation for price changes
+- Modular, service-based Java design
+
+---
+
+
+---
+
+## How to Download
+
+### Option 1: Download as ZIP
+1. Go to the GitHub repository
+2. Click the green **Code** button
+3. Select **Download ZIP**
+4. Extract the folder to your computer
+5. Run on coding platform
+   
+
+### Option 2: Clone with Git
+```bash
+git clone https://github.com/your-username/decision-analytics-toolkit-java.git
 
 
 
